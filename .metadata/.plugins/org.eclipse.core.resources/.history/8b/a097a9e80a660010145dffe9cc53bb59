@@ -1,0 +1,31 @@
+package com.cdac.entity;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public class SubsciptionPlan {
+	@NotNull
+	private int subscriptionId;
+	@NotNull
+	private int custId;
+	@NotBlank
+	private String planType;
+	@NotNull
+	private int planId;
+	@NotNull
+	private LocalDate startDate;
+	@NotNull
+	private LocalDate endDate;
+	@NotBlank
+	private String status;
+	@NotBlank
+	private String description;
+	
+	
+
+	
+	
+}

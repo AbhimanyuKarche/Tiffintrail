@@ -1,0 +1,10 @@
+package com.cdac.entity;
+
+public class TiffinPlan {
+	private int planId;
+	private int vendorId;
+	private String planType;
+	private String description ;
+	private String foodType;
+	private double FoodPrice
+}
