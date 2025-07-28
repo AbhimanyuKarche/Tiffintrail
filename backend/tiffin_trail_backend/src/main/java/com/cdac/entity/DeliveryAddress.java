@@ -1,11 +1,13 @@
 package com.cdac.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +20,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "deliveryaddress")
 public class DeliveryAddress {
-	@NotNull
-	private Long custId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long addressId;     // ....changes custId to addressId
 	@NotBlank
 	private String line1;
 	@NotBlank
@@ -34,10 +37,10 @@ public class DeliveryAddress {
 	@JoinColumn(name="user_id",nullable=false)
 	private User user;
 	
-	public DeliveryAddress(Long custId, String line1, String line2,
+	public DeliveryAddress( Long addressId, String line1, String line2,
 			 String pincode,  String city,  String state) {
 		super();
-		this.custId = custId;
+		this.addressId = addressId;
 		this.line1 = line1;
 		this.line2 = line2;
 		this.pincode = pincode;
