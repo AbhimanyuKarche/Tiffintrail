@@ -23,6 +23,7 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,15 +33,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(exclude = {"user", "tiffinPlans"})
-
+@AllArgsConstructor
+@ToString(exclude = {"user"})
 @Entity
 @Table(name = "subscription_plan")
 
 public class SubscriptionPlan {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long subscriptionId;
 	@NotNull
 	private Long custId;
@@ -60,25 +61,7 @@ public class SubscriptionPlan {
 	@ManyToOne
 	@JoinColumn(name="user_id",nullable=false)
 	private User user;
-	@ManyToMany
-	@JoinTable(
-		    name = "subscription_tiffin",
-		    joinColumns = @JoinColumn(name = "subscription_id"),
-		    inverseJoinColumns = @JoinColumn(name = "plan_id")
-		)
-	private List<TiffinPlan> tiffinPlans=new ArrayList<>();
-	public SubscriptionPlan( Long subscriptionId,  Long custId,  PlanType planType,
-			   LocalDate startDate,  LocalDate endDate,  String status,
-			 String description) {
-		super();
-		this.subscriptionId = subscriptionId;
-		this.custId = custId;
-		this.planType = planType;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.status = status;
-		this.description = description;
-	}
+	
 	
 	
 

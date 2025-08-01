@@ -32,7 +32,7 @@ import lombok.ToString;
 public class Payment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int paymentId;
+	private Long paymentId;
 	
 	@NotNull
 	private double payment;
@@ -50,9 +50,7 @@ public class Payment {
 	
 	@NotNull
 	private LocalDateTime paymentTime;
-	@OneToMany(mappedBy = "payment",cascade=CascadeType.ALL,orphanRemoval = true)
-	private List<Order> orders=new ArrayList<>();
-	public Payment(int paymentId, double payment,  PaymentType paymentType,
+	public Payment(Long paymentId, double payment,  PaymentType paymentType,
 			 PaymentStatus status, LocalDateTime paymentTime) {
 		super();
 		this.paymentId = paymentId;
