@@ -50,6 +50,11 @@ public class Payment {
 	
 	@NotNull
 	private LocalDateTime paymentTime;
+<<<<<<< HEAD
+=======
+	@OneToMany(mappedBy = "payment",cascade=CascadeType.ALL,orphanRemoval = true)
+	private List<Order> orders=new ArrayList<>();
+>>>>>>> 6dceb279039049f99adf719c75d34c682b18686e
 	public Payment(Long paymentId, double payment,  PaymentType paymentType,
 			 PaymentStatus status, LocalDateTime paymentTime) {
 		super();
