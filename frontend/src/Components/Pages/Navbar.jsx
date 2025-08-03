@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className="pl-100">
           <img
             className="w-[100px] h-[88px] "
-            src={"src/assets/logo.png"}
+            src={"/assets/logo.png"}
             alt=""
           />
         </div>
