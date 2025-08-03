@@ -1,12 +1,26 @@
 package com.cdac.entity;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "customer_profiles")
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "customer_profiles")
+
 public class CustomerProfile {
 	    @Id
 	    private Long id;  // This will be same as the User ID
@@ -23,16 +37,9 @@ public class CustomerProfile {
 
 	    private String phone;
 
-	    // Constructors
-	    public CustomerProfile() {}
-
-	    public CustomerProfile(User user, String address, String city, String pincode, String phone) {
-	        this.user = user;
-	        this.address = address;
-	        this.city = city;
-	        this.pincode = pincode;
-	        this.phone = phone;
-	    }
+	    
+	    @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
 
 	    // (Use Lombok @Data if you prefer)
 	

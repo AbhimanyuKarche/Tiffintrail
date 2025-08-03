@@ -1,7 +1,8 @@
 package com.cdac.enums;
 
 public enum OrderStatus {
-	PENDING,
+	PLACED,
+    PROCESSING,
     DELIVERED,
     CANCELLED
 }

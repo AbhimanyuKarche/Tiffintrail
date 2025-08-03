@@ -1,6 +1,10 @@
 package com.cdac.Services;
 
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdac.Repositories.SellerRepository;
 import com.cdac.Repositories.UserRepository;
@@ -10,66 +14,52 @@ import com.cdac.entity.SellerProfile;
 import com.cdac.entity.User;
 
 import lombok.AllArgsConstructor;
+
 @AllArgsConstructor
+@Transactional
 @Service
 public class SellerProfileServiceImpl implements SellerProfileService {
 	private final SellerRepository sellerRepo;
 	private final UserRepository userRepository;
+	 private final ModelMapper modelMapper;
 	
 	@Override
 	public SellerResponseDto createProfile(SellerRequestDto dto) {
 		// 1. Convert DTO to Entity
 		User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+		
+        //mapping dto to entity using model mapper
+        SellerProfile profile = modelMapper.map(dto, SellerProfile.class);
+        profile.setUser(user);// User is not in DTO, must set manually
 
-        SellerProfile profile = new SellerProfile();
-        profile.setUser(user);
-        profile.setBusinessName(dto.getBusinessName());
-        profile.setDescription(dto.getDescription());
-        profile.setAddress(dto.getAddress());
-        profile.setCity(dto.getCity());
-        profile.setPincode(dto.getPincode());
-        profile.setPhone(dto.getPhone());
         
-     // 2. Save entity
+      // 2. Save entity
         SellerProfile savedProfile = sellerRepo.save(profile);
         
         
-     //3. Convert Entity to Response DTO
-        SellerResponseDto response = new SellerResponseDto();
-       response.setId(savedProfile.getId());
-       response.setBusinessName(savedProfile.getBusinessName());
-       response.setDescription(savedProfile.getDescription());
-       response.setAddress(savedProfile.getAddress());
-       response.setCity(savedProfile.getCity());
-       response.setPincode(savedProfile.getPincode());
-       response.setPhone(savedProfile.getPhone());
-       response.setUserId(profile.getUser().getId());
+     //3. Convert Entity to Response DTO using model mapper
+        SellerResponseDto response = modelMapper.map(savedProfile, SellerResponseDto.class);
+        response.setUserId(profile.getUser().getId());
        response.setUserEmail(profile.getUser().getEmail());
-        // set other fields...
+       
         
         return response;
 	}
 
 	@Override
-	public SellerResponseDto getByUser(User user) {
-        SellerResponseDto profile= sellerRepo.findByUser(user);
+	public Optional<SellerResponseDto> getByUser(User user) {
+		SellerProfile profile = sellerRepo.findByUser(user)
+        		.orElseThrow(()-> new RuntimeException("Seller profile not found"));
         
-      // Convert Entity to Response DTO
-        SellerResponseDto response = new SellerResponseDto();
-       response.setId(profile.getId());
-       response.setBusinessName(profile.getBusinessName());
-       response.setDescription(profile.getDescription());
-       response.setAddress(profile.getAddress());
-       response.setCity(profile.getCity());
-       response.setPincode(profile.getPincode());
-       response.setPhone(profile.getPhone());
-       response.setUserId(profile.getUserId());
-       response.setUserEmail(profile.getUserEmail());
+      // Convert Entity to Response DTO using model mapper
+        SellerResponseDto response = modelMapper.map(profile, SellerResponseDto.class);
+       response.setUserId(profile.getUser().getId());
+       response.setUserEmail(profile.getUser().getEmail());
        
         // set other fields...
         
-        return response;
+        return Optional.of(response);
 	}
 
 }

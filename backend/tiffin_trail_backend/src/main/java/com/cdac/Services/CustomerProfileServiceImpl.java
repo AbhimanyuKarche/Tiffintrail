@@ -3,6 +3,7 @@ package com.cdac.Services;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdac.Repositories.CustomerRepository;
 import com.cdac.entity.CustomerProfile;
@@ -11,6 +12,7 @@ import com.cdac.entity.User;
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @Service
+@Transactional
 public class CustomerProfileServiceImpl implements CustomerProfileService {
 	private final CustomerRepository customerRepo;
 	@Override

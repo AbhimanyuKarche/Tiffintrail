@@ -1,6 +1,6 @@
 package com.cdac.entity;
 
-import javax.management.relation.Role;
+import com.cdac.enums.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

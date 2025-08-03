@@ -1,10 +1,21 @@
 package com.cdac.entity;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cdac.enums.PlanType;
+
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "seller_profiles")
 public class SellerProfile {
@@ -28,20 +39,9 @@ public class SellerProfile {
 	    private String pincode;
 
 	    private String phone;
+	    
+	    @OneToMany(mappedBy = "sellerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+	    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
 
-	    // Constructors
-	    public SellerProfile() {}
-
-	    public SellerProfile(User user, String businessName, String description, String address, String city, String pincode, String phone) {
-	        this.user = user;
-	        this.businessName = businessName;
-	        this.description = description;
-	        this.address = address;
-	        this.city = city;
-	        this.pincode = pincode;
-	        this.phone = phone;
-	    }
-
-	    // Getters and Setters
-	    // (Or use Lombok @Data)
+	    
 }

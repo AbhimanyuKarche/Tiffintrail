@@ -34,7 +34,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"user"})
+@ToString()
 @Entity
 @Table(name = "subscription_plan")
 
@@ -43,27 +43,39 @@ public class SubscriptionPlan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long subscriptionId;
-	@NotNull
-	private Long custId;
+	
+	
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private PlanType planType;
+	
 	@PastOrPresent
 	@NotNull
 	private LocalDate startDate;
+	
 	@Future
 	@NotNull
 	private LocalDate endDate;
-	@NotBlank
-	private String status;
+	
+	
+	private boolean isActive;
 	@NotBlank
 	private String description;
+	
+	
+	
+	@OneToMany(mappedBy = "subscription", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Tiffin> tiffins = new ArrayList<>();
+
 	@ManyToOne
-	@JoinColumn(name="user_id",nullable=false)
-	private User user;
+	@JoinColumn(name="cust_id", nullable = false)
+	private CustomerProfile customerProfile;
+
 	
-	
-	
+	@ManyToOne
+	@JoinColumn(name = "seller_id", nullable = false)
+	private SellerProfile sellerProfile;
+
 
 	
 	

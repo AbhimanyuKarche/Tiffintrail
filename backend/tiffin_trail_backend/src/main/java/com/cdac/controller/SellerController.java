@@ -12,7 +12,6 @@ import com.cdac.Repositories.UserRepository;
 import com.cdac.Services.SellerProfileServiceImpl;
 import com.cdac.dto.SellerRequestDto;
 import com.cdac.dto.SellerResponseDto;
-import com.cdac.entity.SellerProfile;
 import com.cdac.entity.User;
 
 import lombok.AllArgsConstructor;

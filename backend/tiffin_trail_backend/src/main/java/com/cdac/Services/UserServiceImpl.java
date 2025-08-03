@@ -1,6 +1,7 @@
 package com.cdac.Services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cdac.Repositories.UserRepository;
 import com.cdac.dto.UserRequestDto;
@@ -11,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-
+@Transactional
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 
