@@ -1,42 +1,38 @@
 package com.cdac.Services;
 
+import java.util.Optional;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdac.Repositories.UserRepository;
-import com.cdac.dto.UserRequestDto;
-import com.cdac.dto.UserResponseDto;
 import com.cdac.entity.User;
 
-import lombok.AllArgsConstructor;
-
 @Service
-@AllArgsConstructor
+
 @Transactional
 public class UserServiceImpl implements UserService {
-	private final UserRepository userRepository;
 
-	@Override
-	public UserResponseDto saveUser(UserRequestDto userRequestDto) {
-		 // 1. Convert DTO to Entity
-        User user = new User();
-        user.setFullName(userRequestDto.getFullName());
-        user.setEmail(userRequestDto.getEmail());
-        user.setPassword(userRequestDto.getPassword());
-        // set other fields...
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-        // 2. Save entity
-        User savedUser = userRepository.save(user);
+    // Spring will automatically inject the repository via this constructor
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-        // 3. Convert Entity to Response DTO
-        UserResponseDto response = new UserResponseDto();
-        response.setId(savedUser.getId());
-        response.setFullName(savedUser.getFullName());
-        response.setEmail(savedUser.getEmail());
-        // set other fields...
+    @Override
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
 
-        return response;
-	}
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }	
+    
 	
 
 	
