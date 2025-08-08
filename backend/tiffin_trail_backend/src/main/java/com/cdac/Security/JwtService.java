@@ -1,11 +1,13 @@
 package com.cdac.Security;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Component
 public class JwtService {
 

@@ -16,13 +16,7 @@ public class Order {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
-	    // Many orders can belong to one customer
-	    @ManyToOne
-	    @JoinColumn(name = "customer_id", nullable = false)
-	    private CustomerProfile customer;
-
-	    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	    private List<OrderItem> items;
+	    
 
 	    private Double totalAmount;
 
@@ -30,6 +24,15 @@ public class Order {
 
 	    @Enumerated(EnumType.STRING)
 	    private OrderStatus status = OrderStatus.PLACED;
+	    
+	    
+	 // Many orders can belong to one customer
+	    @ManyToOne
+	    @JoinColumn(name = "customer_id", nullable = false)
+	    private CustomerProfile customer;
+
+	    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	    private List<OrderItem> items;
 	
 
 }

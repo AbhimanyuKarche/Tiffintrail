@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.Repositories.SellerRepository;
 import com.cdac.Repositories.UserRepository;
-import com.cdac.Services.TiffinService;
 import com.cdac.dto.SellerRequestDto;
 import com.cdac.dto.TiffinRequestDto;
 import com.cdac.dto.TiffinResponseDto;
 import com.cdac.entity.SellerProfile;
 import com.cdac.entity.User;
+import com.cdac.services.TiffinService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.AllArgsConstructor;

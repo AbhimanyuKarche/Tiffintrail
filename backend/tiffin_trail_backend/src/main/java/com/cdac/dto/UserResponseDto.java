@@ -1,6 +1,8 @@
 package com.cdac.dto;
 
-import javax.management.relation.Role;
+
+
+import com.cdac.enums.Role;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +17,11 @@ public class UserResponseDto {
 
     
     private String email;
+    private String password;
     private Role role;
 
     private boolean active;
+    
 	
 	
 	

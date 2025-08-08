@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cdac.Services.SubscriptionPlanService;
 import com.cdac.dto.SubscriptionPlanRequestDto;
 import com.cdac.dto.SubscriptionPlanResponseDto;
+import com.cdac.services.SubscriptionPlanService;
 
 import lombok.AllArgsConstructor;
 

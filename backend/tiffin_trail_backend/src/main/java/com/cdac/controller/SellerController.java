@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.Repositories.UserRepository;
-import com.cdac.Services.SellerProfileServiceImpl;
 import com.cdac.dto.SellerRequestDto;
 import com.cdac.dto.SellerResponseDto;
 import com.cdac.entity.User;
+import com.cdac.services.SellerProfileServiceImpl;
 
 import lombok.AllArgsConstructor;
 @AllArgsConstructor

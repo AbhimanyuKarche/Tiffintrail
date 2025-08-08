@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cdac.Repositories.CustomerRepository;
 import com.cdac.Repositories.TiffinRepository;
-import com.cdac.Services.CartService;
 import com.cdac.dto.CartItemResponseDto;
 import com.cdac.dto.CartResponseDto;
 import com.cdac.entity.CustomerProfile;
 import com.cdac.entity.Tiffin;
+import com.cdac.services.CartService;
 
 import lombok.AllArgsConstructor;
 

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.Repositories.CustomerRepository;
-import com.cdac.Services.OrderService;
 import com.cdac.dto.OrderRequestDto;
 import com.cdac.dto.OrderResponseDto;
 import com.cdac.entity.CustomerProfile;
+import com.cdac.services.OrderService;
 
 import lombok.RequiredArgsConstructor;
 
