@@ -1,23 +1,19 @@
 package com.cdac.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class TiffinResponseDto {
-    private Long id;
-    private String name;
+	private Long id;
+    private String title;
     private String description;
-    private Double price;
-    private boolean isVeg;
-    private String imageUrl;
-    private boolean available;
-
-    private Long sellerId;
-    private String sellerName;  // optional for display
-
-    private Long subscriptionId;
-    private String subscriptionType; // optional display field
+    private double price;
+    private String sellerName;
+    private String sellerEmail;
 }

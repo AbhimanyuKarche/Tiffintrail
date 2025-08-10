@@ -24,10 +24,7 @@ public class SellerProfileServiceImpl implements SellerProfileService {
 	 private final ModelMapper modelMapper;
 	
 	@Override
-	public SellerResponseDto createProfile(SellerRequestDto dto) {
-		// 1. Convert DTO to Entity
-		User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+	public SellerResponseDto createProfile(User user,SellerRequestDto dto) {
 		
         //mapping dto to entity using model mapper
         SellerProfile profile = modelMapper.map(dto, SellerProfile.class);

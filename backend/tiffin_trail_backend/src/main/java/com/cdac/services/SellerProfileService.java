@@ -7,6 +7,6 @@ import com.cdac.dto.SellerResponseDto;
 import com.cdac.entity.User;
 
 public interface SellerProfileService {
-	SellerResponseDto createProfile(SellerRequestDto dto);
+	SellerResponseDto createProfile(User user,SellerRequestDto dto);
 	Optional<SellerResponseDto >getByUser(User user);
 }

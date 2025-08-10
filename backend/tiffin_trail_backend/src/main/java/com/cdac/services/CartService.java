@@ -2,7 +2,7 @@ package com.cdac.services;
 
 import java.util.List;
 
-import com.cdac.dto.CartItemResponseDto;
+import com.cdac.dto.CartItemResponseDTO;
 import com.cdac.dto.CartResponseDto;
 import com.cdac.entity.CustomerProfile;
 import com.cdac.entity.Tiffin;
@@ -13,5 +13,5 @@ public interface CartService {
     CartResponseDto updateCartItem(CustomerProfile customer, Long itemId, int quantity);
     void removeCartItem(CustomerProfile customer, Long itemId);
     void clearCart(CustomerProfile customer);
-    List<CartItemResponseDto> getCartItems(CustomerProfile customer);
+    List<CartItemResponseDTO> getCartItems(CustomerProfile customer);
 }

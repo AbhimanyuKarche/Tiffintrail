@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cdac.Repositories.CartItemRepository;
 import com.cdac.Repositories.CartRepository;
-import com.cdac.dto.CartItemResponseDto;
+import com.cdac.dto.CartItemResponseDTO;
 import com.cdac.dto.CartResponseDto;
 import com.cdac.entity.Cart;
 import com.cdac.entity.CartItem;
@@ -89,11 +89,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItemResponseDto> getCartItems(CustomerProfile customer) {
+    public List<CartItemResponseDTO> getCartItems(CustomerProfile customer) {
         Cart cart = getOrCreateCart(customer);
         return cart.getItems()
                 .stream()
-                .map(item -> modelMapper.map(item, CartItemResponseDto.class))
+                .map(item -> modelMapper.map(item, CartItemResponseDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -110,9 +110,9 @@ public class CartServiceImpl implements CartService {
 
     private CartResponseDto convertToCartResponseDto(Cart cart) {
         CartResponseDto cartDto = modelMapper.map(cart, CartResponseDto.class);
-        List<CartItemResponseDto> itemDtos = cart.getItems()
+        List<CartItemResponseDTO> itemDtos = cart.getItems()
                 .stream()
-                .map(item -> modelMapper.map(item, CartItemResponseDto.class))
+                .map(item -> modelMapper.map(item, CartItemResponseDTO.class))
                 .collect(Collectors.toList());
         cartDto.setItems(itemDtos);
         return cartDto;

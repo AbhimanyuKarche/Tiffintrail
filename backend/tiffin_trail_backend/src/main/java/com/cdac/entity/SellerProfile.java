@@ -1,11 +1,19 @@
 package com.cdac.entity;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cdac.enums.PlanType;
+import com.cdac.enums.RequestStatus;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +47,8 @@ public class SellerProfile {
 	    private String pincode;
 
 	    private String phone;
+	    @Enumerated(EnumType.STRING)
+	    private RequestStatus approvalStatus = RequestStatus.PENDING;
 	    
 	    @OneToMany(mappedBy = "sellerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
 	    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();

@@ -13,5 +13,5 @@ public class CartResponseDto {
     private Long customerId;
     private String customerName; // Optional for display
     private LocalDateTime createdAt;
-    private List<CartItemResponseDto> items;
+    private List<CartItemResponseDTO> items;
 }

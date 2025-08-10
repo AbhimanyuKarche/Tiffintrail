@@ -3,11 +3,18 @@ package com.cdac.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.Repositories.CustomerRepository;
 import com.cdac.Repositories.TiffinRepository;
-import com.cdac.dto.CartItemResponseDto;
+import com.cdac.dto.CartItemResponseDTO;
 import com.cdac.dto.CartResponseDto;
 import com.cdac.entity.CustomerProfile;
 import com.cdac.entity.Tiffin;
@@ -42,7 +49,7 @@ public class CartController {
 
     // View cart items
     @GetMapping("/{customerId}")
-    public ResponseEntity<List<CartItemResponseDto>> getCartItems(@PathVariable Long customerId) {
+    public ResponseEntity<List<CartItemResponseDTO>> getCartItems(@PathVariable Long customerId) {
         CustomerProfile customer = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         return ResponseEntity.ok(cartService.getCartItems(customer));
