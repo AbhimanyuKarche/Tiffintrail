@@ -16,6 +16,9 @@ import SellerMainPage from "../routes/SellerMainPage";
 import SellerDashboard from "../routes/SellerDashboard";
 import AdminDashboard from "../routes/AdminDashboard";
 import CustomerDashboard from "../routes/CustomerDashboard";
+import FavSellerPage from "../routes/FavSellerPage";
+import FavtiffinListing from "../routes/FavtiffinListing";
+import SellersubPlan from "../routes/SellerSubPlan";
 import ImageTest from "../routes/ImageTest";
 
 const routerinfo = () => {
@@ -39,6 +42,9 @@ const routerinfo = () => {
         <Route path="/sellerDashboard" element={<SellerDashboard />} />
         <Route path="/adminDashboard" element={<AdminDashboard />} />
         <Route path="/customerDashboard" element={<CustomerDashboard />} />
+        <Route path="/favSellerPage" element={<FavSellerPage />} />
+        <Route path="/favtiffinListing" element={<FavtiffinListing />} />
+        <Route path="/sellersubplan" element={<SellersubPlan />} />
       </Routes>
     </BrowserRouter>
   );

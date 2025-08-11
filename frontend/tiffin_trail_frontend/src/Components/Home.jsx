@@ -22,7 +22,7 @@ const Home = () => {
                 taste.
               </p>
             </div>
-            
+            <div></div>
           </div>
           <div className="flex w-[45%] h-[100%] justify-center">
             <img

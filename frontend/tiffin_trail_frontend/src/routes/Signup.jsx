@@ -45,6 +45,14 @@ const CustomerProfileForm = () => {
       );
       console.log("User registered:", res.data);
       alert("Registration successful!");
+
+      // ✅ Clear fields
+      setSignUpData({
+        fullName: "",
+        email: "",
+        password: "",
+        role: "",
+      });
     } catch (error) {
       console.error("Registration failed", error);
       alert("Failed to register.");
@@ -67,6 +75,10 @@ const CustomerProfileForm = () => {
       localStorage.setItem("fullName", fullName);
 
       alert("Login successful!");
+      setSignInData({
+        email: "",
+        password: "",
+      });
 
       if (role === "SELLER") {
         navigate("/sellermpage");
@@ -133,7 +145,7 @@ const CustomerProfileForm = () => {
               <option value="">Select Role</option>
               <option value="CUSTOMER">Customer</option>
               <option value="SELLER">Seller</option>
-            
+              <option value="ADMIN">Admin</option>
             </select>
 
             <button type="submit">Sign Up</button>

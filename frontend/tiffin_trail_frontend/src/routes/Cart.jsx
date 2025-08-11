@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosConfig from "../utils/axiosConfig";
+import CheckoutPage from "./CheckoutPage ";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -102,7 +103,7 @@ const Cart = () => {
           ))}
 
           {/* Confirm Order Button */}
-          <div className="mt-6 text-right">
+          {/* <div className="mt-6 text-right">
             <button
               onClick={confirmOrder}
               disabled={cartItems.length === 0}
@@ -114,7 +115,8 @@ const Cart = () => {
             >
               Confirm Order
             </button>
-          </div>
+          </div> */}
+          <CheckoutPage></CheckoutPage>
         </>
       )}
     </div>

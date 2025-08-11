@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerProfileForm() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -39,6 +42,7 @@ export default function CustomerProfileForm() {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMessage("✅ Customer profile created successfully!");
+      navigate("/customerDashboard");
     } catch (err) {
       console.error(err);
       setMessage("❌ Error creating customer profile!");
