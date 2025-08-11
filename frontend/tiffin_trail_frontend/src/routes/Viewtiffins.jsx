@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AddToCartButton from "../Components/AddtoCartButton";
 
 const AllTiffins = () => {
   const [tiffins, setTiffins] = useState([]);
@@ -96,34 +97,7 @@ const AllTiffins = () => {
               </div>
 
               {/* Actions */}
-              <div className="flex flex-col items-center gap-2">
-                {!showQuantity[tiffin.id] ? (
-                  <button
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                    onClick={() => handleAddClick(tiffin.id)}
-                  >
-                    Add to Cart
-                  </button>
-                ) : (
-                  <>
-                    <input
-                      type="number"
-                      min="1"
-                      className="w-16 border px-2 py-1 rounded"
-                      value={quantities[tiffin.id]}
-                      onChange={(e) =>
-                        handleQuantityChange(tiffin.id, e.target.value)
-                      }
-                    />
-                    <button
-                      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-                      onClick={() => addToCart(tiffin.id)}
-                    >
-                      Confirm
-                    </button>
-                  </>
-                )}
-              </div>
+              <AddToCartButton tiffinId={tiffin.id} />
             </li>
           ))}
         </ul>

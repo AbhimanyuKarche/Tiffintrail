@@ -38,7 +38,7 @@ export default function ActionAreaCard() {
         </Card>
       </div>
       <Card sx={{ maxWidth: 400, borderRadius: 10 }}>
-        <CardActionArea>
+        <CardActionArea onClick={() => navigate("/favsellerpage")}>
           <CardMedia
             component="img"
             height="140"
@@ -58,6 +58,27 @@ export default function ActionAreaCard() {
               variant="body2"
               sx={{ color: "text.secondary" }}
             ></Typography>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+
+      <Card sx={{ maxWidth: 400, borderRadius: 10 }}>
+        <CardActionArea onClick={() => navigate("/usersubpage")}>
+          <CardMedia
+            component="img"
+            height="140"
+            image={""} // Make sure you add this image in assets
+            alt="Explore Subscriptions"
+          />
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="div"
+              align="center"
+            >
+              Explore Subscriptions
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>

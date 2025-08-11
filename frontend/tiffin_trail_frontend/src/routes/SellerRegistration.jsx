@@ -43,6 +43,14 @@ const TestingSeller = () => {
       );
 
       alert("✅ Profile created successfully!");
+      setFormData({
+        businessName: "",
+        description: "",
+        address: "",
+        city: "",
+        pincode: "",
+        phone: "",
+      });
     } catch (err) {
       console.error(err);
       if (err.response?.status === 403) {

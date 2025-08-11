@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // <-- import useNavigate
 
 const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // <-- initialize navigate
   const token = localStorage.getItem("token");
 
   const loadRazorpayScript = () => {
@@ -57,10 +59,9 @@ const CheckoutPage = () => {
           alert(
             "Payment successful! Payment ID: " + response.razorpay_payment_id
           );
-          // TODO: call your backend to confirm payment & update order status
+          setTimeout(() => navigate("/customerDashboard"), 1000); // <-- redirect after payment success
         },
         prefill: {
-          // optionally prefill customer info
           email: "",
           contact: "",
         },

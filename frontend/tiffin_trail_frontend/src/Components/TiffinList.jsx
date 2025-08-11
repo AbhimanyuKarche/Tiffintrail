@@ -1,5 +1,14 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
 const TiffinList = ({ tiffins }) => {
+  const navigate = useNavigate();
+
   if (!tiffins.length) return <p>No tiffins yet.</p>;
+
+  const handleCreatePlan = (tiffinId) => {
+    navigate("/sellersubplan", { state: { tiffinId } });
+  };
 
   return (
     <div>
@@ -20,12 +29,18 @@ const TiffinList = ({ tiffins }) => {
             )}
 
             {/* Text content */}
-            <div>
+            <div className="flex-1">
               <h4 className="font-semibold">{tiffin.name}</h4>
               <p className="text-gray-700">{tiffin.description}</p>
               <p>
                 <strong>Price:</strong> ₹{tiffin.price}
               </p>
+              <button
+                onClick={() => handleCreatePlan(tiffin.id)}
+                className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Create Plan for this Tiffin
+              </button>
             </div>
           </li>
         ))}

@@ -145,7 +145,7 @@ const CustomerProfileForm = () => {
               <option value="">Select Role</option>
               <option value="CUSTOMER">Customer</option>
               <option value="SELLER">Seller</option>
-              <option value="ADMIN">Admin</option>
+            
             </select>
 
             <button type="submit">Sign Up</button>

@@ -3,8 +3,10 @@ import axios from "axios";
 import SellerProfileCard from "../Components/SellerProfileCard";
 import TiffinList from "../Components/TiffinList";
 import AddTiffinForm from "../Components/AddTiffinForm";
+import { useNavigate } from "react-router-dom";
 
 const SellerDashboard = () => {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [tiffins, setTiffins] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,6 +50,13 @@ const SellerDashboard = () => {
       <h1 className="text-2xl font-bold">Seller Dashboard</h1>
 
       <SellerProfileCard profile={profile} />
+      {/* ✅ View Plans Button */}
+      <button
+        onClick={() => navigate("/sellerviewplans")}
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+      >
+        View Your Created Plans
+      </button>
 
       {profile.approvalStatus === "APPROVED" ? (
         <>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePlan() {
+  const navigate = useNavigate();
+
   const [tiffins, setTiffins] = useState([]);
   const [form, setForm] = useState({
     name: "",
@@ -61,7 +64,8 @@ export default function CreatePlan() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setMessage("✅ Plan created successfully!");
+      alert("✅ Plan created successfully!");
+      navigate("/sellerDashboard");
       setForm({
         name: "",
         description: "",

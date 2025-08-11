@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cart from "../Components/Cart";
+import AddToCartButton from "../Components/AddtoCartButton";
 
 export default function SellersPage() {
   const navigate = useNavigate();
@@ -219,13 +220,6 @@ export default function SellersPage() {
                           >
                             View Menu
                           </button>
-
-                          <button
-                            onClick={() => goToSellerPage(seller)}
-                            className="inline-flex items-center rounded-md border border-indigo-600 px-3 py-1 text-xs font-medium text-indigo-600 hover:bg-indigo-50"
-                          >
-                            Order
-                          </button>
                         </div>
                       </div>
 
@@ -309,12 +303,6 @@ export default function SellersPage() {
               </div>
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => goToSellerPage(selectedSeller)}
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-1 text-sm font-medium text-white"
-                >
-                  Order from this seller
-                </button>
-                <button
                   onClick={closeModal}
                   className="rounded-md px-3 py-1 text-sm"
                 >
@@ -361,20 +349,7 @@ export default function SellersPage() {
                               ₹ {t.price}
                             </div>
                             <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => navigate(`/tiffin/${t.id}`)}
-                                className="rounded-md border px-3 py-1 text-sm"
-                              >
-                                View
-                              </button>
-                              <button
-                                onClick={() =>
-                                  navigate(`/tiffin/${t.id}/order`)
-                                }
-                                className="rounded-md bg-indigo-600 px-3 py-1 text-sm text-white"
-                              >
-                                Add to cart
-                              </button>
+                              <AddToCartButton tiffinId={t.id} />
                             </div>
                           </div>
                         </div>
