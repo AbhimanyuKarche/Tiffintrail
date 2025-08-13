@@ -1,7 +1,6 @@
 package com.cdac.controller;
 
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cdac.Security.JwtService;
-import com.cdac.dto.UserRequestDto;
-import com.cdac.dto.UserResponseDto;
+import com.cdac.entity.User;
 import com.cdac.services.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,12 +28,13 @@ public class UserController {
     private final JwtService jwtService;
 
     //  Register new user
-    public ResponseEntity<String> register(@RequestBody UserRequestDto userRequestDto) {
-        if (userService.findByEmail(userRequestDto.getEmail()).isPresent()) {
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody User user) {
+        if (userService.findByEmail(user.getEmail()).isPresent()) {
             return ResponseEntity.badRequest().body("Email already exists!");
         }
 
-        userService.saveUser(userRequestDto);
+        userService.saveUser(user);
         return ResponseEntity.ok("User registered successfully.");
     }
 
@@ -45,15 +44,15 @@ public class UserController {
         String email = request.get("email");
         String password = request.get("password");
 
-        Optional<UserResponseDto> userOpt = userService.findByEmail(email);
+        Optional<User> userOpt = userService.findByEmail(email);
 
-        if (userOpt.isPresent()) {
-            UserResponseDto userDto = userOpt.get();
-            if (password.matches(password)) {
-                String token = jwtService.generateToken(email);
-                return ResponseEntity.ok(Collections.singletonMap("token", token));
-            }
-        }
+//        if (userOpt.isPresent()) {
+//            User user = userOpt.get();
+//            if (new BCryptPasswordEncoder().matches(password, user.getPassword())) {
+//                String token = jwtService.generateToken(email);
+//                return ResponseEntity.ok(Collections.singletonMap("token", token));
+//            }
+//        }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
     }

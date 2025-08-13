@@ -9,11 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TiffinResponseDto {
+public class TiffinResponseDTO {
 	private Long id;
     private String title;
     private String description;
     private double price;
     private String sellerName;
     private String sellerEmail;
+    private String imageUrl;
 }

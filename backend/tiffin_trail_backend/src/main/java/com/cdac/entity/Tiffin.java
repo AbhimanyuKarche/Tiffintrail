@@ -31,10 +31,6 @@ public class Tiffin {
     @JoinColumn(name = "seller_id", nullable = false)
     private SellerProfile seller;
     
-    //for subscription plan beacause it contain multiple tiffins
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subscription_id", nullable = false)
-    private SubscriptionPlan subscription;
-
+    
     // Optional: quantity or type field can be added as needed
 }

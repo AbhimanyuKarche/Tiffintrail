@@ -3,17 +3,19 @@ package com.cdac.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cdac.Repositories.CartItemRepository;
+import com.cdac.Repositories.CartRepository;
+import com.cdac.Repositories.OrderItemRepository;
 import com.cdac.Repositories.OrderRepository;
-import com.cdac.dto.OrderRequestDto;
-import com.cdac.dto.OrderResponseDto;
+import com.cdac.entity.Cart;
+import com.cdac.entity.CartItem;
 import com.cdac.entity.CustomerProfile;
 import com.cdac.entity.Order;
+import com.cdac.entity.OrderItem;
 import com.cdac.enums.OrderStatus;
 
 import lombok.AllArgsConstructor;
@@ -21,43 +23,86 @@ import lombok.AllArgsConstructor;
 @Service
 @Transactional
 @AllArgsConstructor
-public class OrderServiceImpl implements OrderService {
 
+public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepo;
-    private final ModelMapper modelMapper;
+    private final OrderItemRepository orderItemRepo;
+    private final CartItemRepository cartItemRepo;
+    private final CartRepository cartRepo;
+
+
+    // existing fields
+    private final RazorpayService razorpayService;  // inject your Razorpay service
+
+   
 
     @Override
-    public OrderResponseDto placeOrder(OrderRequestDto orderRequestDto) {
-        // Convert DTO to entity
-        Order order = modelMapper.map(orderRequestDto, Order.class);
+    @Transactional
+    public Order placeOrder(CustomerProfile customer) throws Exception {
 
-        // Set order reference in each item
-        if (order.getItems() != null) {
-            order.getItems().forEach(item -> item.setOrder(order));
+        Cart cart = cartRepo.findByCustomerWithItems(customer)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+
+        List<CartItem> cartItems = cart.getItems();
+
+        if (cartItems == null || cartItems.isEmpty()) {
+            throw new RuntimeException("Cart is empty");
         }
 
-        // Set order date and status
+        Order order = new Order();
+        order.setCustomer(customer);
         order.setOrderDate(LocalDateTime.now());
-        order.setStatus(OrderStatus.PLACED);
+        order.setStatus(OrderStatus.PENDING);  // new status
 
-        // Save order
-        Order savedOrder = orderRepo.save(order);
+        double total = 0.0;
 
-        // Convert entity to response DTO
-        return modelMapper.map(savedOrder, OrderResponseDto.class);
+        order = orderRepo.save(order);
+
+        for (CartItem cartItem : cartItems) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setTiffin(cartItem.getTiffin());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setPrice(cartItem.getTiffin().getPrice());
+
+            orderItemRepo.save(orderItem);
+
+            total += cartItem.getTiffin().getPrice() * cartItem.getQuantity();
+        }
+
+        order.setTotalAmount(total);
+
+        // Create Razorpay order (amount in paise)
+        int amountInPaise = (int)(total * 100);
+
+        com.razorpay.Order razorpayOrder = razorpayService.createOrder(amountInPaise, "INR", "order_rcptid_" + order.getId());
+
+        // Save razorpay order id in your order entity
+        order.setRazorpayOrderId(razorpayOrder.get("id"));
+        order = orderRepo.save(order);
+
+        // Clear cart
+        cart.getItems().clear();
+        cartItemRepo.deleteAllByCart(cart);
+
+        return order;
+    }
+    @Override
+    public Optional<Order> getOrderByRazorpayOrderId(String razorpayOrderId) {
+        return orderRepo.findByRazorpayOrderId(razorpayOrderId);
     }
 
-
     @Override
-    public List<OrderResponseDto> getOrdersByCustomer(CustomerProfile customer) {
-        return orderRepo.findByCustomer(customer).stream()
-                .map(order -> modelMapper.map(order, OrderResponseDto.class))
-                .collect(Collectors.toList());
+    public List<Order> getOrdersByCustomer(CustomerProfile customer) {
+        return List.of();
     }
 
     @Override
-    public Optional<OrderResponseDto> getOrderById(Long id) {
-        return orderRepo.findById(id)
-                .map(order -> modelMapper.map(order, OrderResponseDto.class));
+    public Optional<Order> getOrderById(Long id) {
+        return Optional.empty();
+    }
+    @Override
+    public Order save(Order order) {
+        return orderRepo.save(order);
     }
 }

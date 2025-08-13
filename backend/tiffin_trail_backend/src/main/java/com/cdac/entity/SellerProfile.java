@@ -50,8 +50,6 @@ public class SellerProfile {
 	    @Enumerated(EnumType.STRING)
 	    private RequestStatus approvalStatus = RequestStatus.PENDING;
 	    
-	    @OneToMany(mappedBy = "sellerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
-
+	    
 	    
 }

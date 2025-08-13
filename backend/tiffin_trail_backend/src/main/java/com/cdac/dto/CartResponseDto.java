@@ -10,8 +10,7 @@ import lombok.Setter;
 @Setter
 public class CartResponseDto {
     private Long id;
-    private Long customerId;
-    private String customerName; // Optional for display
-    private LocalDateTime createdAt;
+     private LocalDateTime createdAt;
+     private CustomerProfileResponseDTO customer;
     private List<CartItemResponseDTO> items;
 }

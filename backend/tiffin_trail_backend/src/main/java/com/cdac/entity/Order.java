@@ -21,6 +21,7 @@ public class Order {
 	    private Double totalAmount;
 
 	    private LocalDateTime orderDate;
+	    private String razorpayOrderId;
 
 	    @Enumerated(EnumType.STRING)
 	    private OrderStatus status = OrderStatus.PLACED;

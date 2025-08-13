@@ -1,13 +1,11 @@
 package com.cdac.entity;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -27,6 +25,7 @@ public class CustomerProfile {
 	    @OneToOne
 	    @MapsId
 	    @JoinColumn(name = "user_id")
+	    @JsonBackReference
 	    private User user;
 
 	    private String address;
@@ -37,10 +36,9 @@ public class CustomerProfile {
 
 	    private String phone;
 
-	    
-	    @OneToMany(mappedBy = "customerProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<SubscriptionPlan> subscriptionPlans = new ArrayList<>();
+	    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+	    private Cart cart;
 
-	    // (Use Lombok @Data if you prefer)
+	   
 	
 }

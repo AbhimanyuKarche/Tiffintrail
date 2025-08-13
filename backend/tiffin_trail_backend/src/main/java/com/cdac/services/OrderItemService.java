@@ -2,11 +2,10 @@ package com.cdac.services;
 
 import java.util.List;
 
-import com.cdac.dto.OrderItemRequestDto;
-import com.cdac.dto.OrderItemResponseDto;
 import com.cdac.entity.Order;
+import com.cdac.entity.OrderItem;
 
 public interface OrderItemService {
-    List<OrderItemResponseDto> saveOrderItems(List<OrderItemRequestDto> items);
-    List<OrderItemResponseDto> getItemsByOrder(Order order);
-}
+	 List<OrderItem> saveOrderItems(List<OrderItem> items);
+	    List<OrderItem> getItemsByOrder(Order order);
+    }

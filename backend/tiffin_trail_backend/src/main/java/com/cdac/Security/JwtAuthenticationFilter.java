@@ -22,16 +22,11 @@ import lombok.AllArgsConstructor;
 @Component
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
+	@Autowired
     private JwtTokenUtil jwtTokenUtil;
-
-   
+	  @Autowired
     private UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    public JwtAuthenticationFilter(JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService) {
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.userDetailsService = userDetailsService;
-    }
+   
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {

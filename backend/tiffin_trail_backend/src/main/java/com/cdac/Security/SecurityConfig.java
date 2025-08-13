@@ -1,5 +1,4 @@
 package com.cdac.Security;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,27 +16,24 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.cdac.services.UserDetailsServiceImpl;
+
+import lombok.RequiredArgsConstructor;
 @Configuration
-@EnableWebSecurity
+
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtFilter;
     private final UserDetailsServiceImpl userDetailsService;
 
-    @Autowired
-    public SecurityConfig(JwtAuthenticationFilter jwtFilter,
-                           UserDetailsServiceImpl userDetailsService) {
-        this.jwtFilter = jwtFilter;
-        this.userDetailsService = userDetailsService;
-    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults()) // Enable CORS globally
+                .cors(Customizer.withDefaults()) //  Enable CORS globally
                 .authorizeHttpRequests(auth -> auth
-                        // Allow all preflight OPTIONS requests
+                        // Allow preflight requests (very important)
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // Public endpoints
@@ -47,21 +42,24 @@ public class SecurityConfig {
                         // Allow GET access to tiffins for everyone
                         .requestMatchers(HttpMethod.GET, "/api/tiffins/**").permitAll()
 
-                        // Seller endpoints
+                        // Allow POST/PUT/DELETE for sellers
                         .requestMatchers("/api/tiffins/**").hasRole("SELLER")
+                        .requestMatchers("/api/seller/plans/**").hasRole("SELLER")
+                        .requestMatchers(HttpMethod.GET, "/api/seller/approved").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/tiffins/seller/**").hasRole("CUSTOMER")
 
-                        // Customer endpoints
-                        .requestMatchers("/api/cart/**").hasRole("CUSTOMER")
 
-                        // Admin endpoints
+
+
+                        .requestMatchers("/api/cart/**").hasRole("CUSTOMER") //  Add this if you haven't already
+
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                        // Everything else needs authentication
+                        // All other endpoints need authentication
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
@@ -84,3 +82,4 @@ public class SecurityConfig {
     }
 }
 
+   

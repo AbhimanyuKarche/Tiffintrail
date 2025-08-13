@@ -4,64 +4,57 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdac.Repositories.SellerRepository;
 import com.cdac.Repositories.TiffinRepository;
-import com.cdac.dto.TiffinRequestDto;
-import com.cdac.dto.TiffinResponseDto;
+import com.cdac.dto.TiffinResponseDTO;
 import com.cdac.entity.SellerProfile;
 import com.cdac.entity.Tiffin;
+import com.cdac.entity.User;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 @Transactional
-public class TiffinServiceImpl implements TiffinService {
-
+public class TiffinServiceImpl implements TiffinService  {
     private final TiffinRepository tiffinRepo;
-    private final SellerRepository sellerRepo;
-    private final ModelMapper modelMapper;
 
     @Override
-    public TiffinResponseDto createTiffin(SellerProfile seller, TiffinRequestDto tiffinDto) {
-        
-        // Map TiffinReqDto to Tiffin entity
-        Tiffin tiffin = modelMapper.map(tiffinDto, Tiffin.class);
-        //set seller
+    public Tiffin createTiffin(SellerProfile seller, Tiffin tiffin) {
         tiffin.setSeller(seller);
+        return tiffinRepo.save(tiffin);
+    }
 
-        // Save Tiffin
-        Tiffin saved = tiffinRepo.save(tiffin);
+    public List<TiffinResponseDTO> getAllTiffins() {
+        List<Tiffin> tiffins = tiffinRepo.findAll();
 
-        // Map back to response DTO
-        return modelMapper.map(saved, TiffinResponseDto.class);
+        return tiffins.stream().map(tiffin -> {
+            SellerProfile seller = tiffin.getSeller();
+            User user = seller.getUser(); // assuming this exists
+
+            return new TiffinResponseDTO(
+                    tiffin.getId(),
+                    tiffin.getName(),
+                    tiffin.getDescription(),
+                    tiffin.getPrice(),
+                    user.getFullName(),
+                    user.getEmail(),
+                    tiffin.getImageUrl()
+            );
+        }).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Tiffin> getTiffinsBySeller(SellerProfile seller) {
+        return tiffinRepo.findBySeller(seller);
     }
 
     @Override
-    public List<TiffinResponseDto> getAllTiffins() {
-        return tiffinRepo.findAll()
-                .stream()
-                .map(tiffin -> modelMapper.map(tiffin, TiffinResponseDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<TiffinResponseDto> getTiffinsBySeller(SellerProfile seller) {
-        
-        return tiffinRepo.findBySeller(seller)
-                .stream()
-                .map(tiffin -> modelMapper.map(tiffin, TiffinResponseDto.class))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public Optional<TiffinResponseDto> getTiffinById(Long id) {
-        return tiffinRepo.findById(id)
-                .map(tiffin -> modelMapper.map(tiffin, TiffinResponseDto.class));
+    public Optional<Tiffin> getTiffinById(Long id) {
+        return tiffinRepo.findById(id);
     }
 
     @Override

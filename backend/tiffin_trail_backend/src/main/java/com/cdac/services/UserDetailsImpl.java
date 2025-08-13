@@ -12,7 +12,7 @@ import com.cdac.entity.User;
 import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
-    private final User user;
+	private final User user;
 
     
 

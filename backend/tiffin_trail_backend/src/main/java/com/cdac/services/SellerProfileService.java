@@ -2,11 +2,10 @@ package com.cdac.services;
 
 import java.util.Optional;
 
-import com.cdac.dto.SellerRequestDto;
-import com.cdac.dto.SellerResponseDto;
+import com.cdac.entity.SellerProfile;
 import com.cdac.entity.User;
 
 public interface SellerProfileService {
-	SellerResponseDto createProfile(User user,SellerRequestDto dto);
-	Optional<SellerResponseDto >getByUser(User user);
-}
+    SellerProfile createProfile(User user, SellerProfile profile);
+    Optional<SellerProfile> getByUser(User user);
+	}
